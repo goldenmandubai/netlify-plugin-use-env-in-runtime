@@ -1,141 +1,99 @@
+<p align="center">
+  <p align="center">
+    <a href="https://justdjango.com/?utm_source=github&utm_medium=logo" target="_blank">
+      <img src="https://assets.justdjango.com/static/branding/logo.svg" alt="JustDjango" height="72">
+    </a>
+  </p>
+  <p align="center">
+    The Definitive Django Learning Platform.
+  </p>
+</p>
 
-![promotional-banner img](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/blob/main/assets/img/promotional-banner.png)
+### *** Deprecation warning ***
 
-&nbsp;  
-&nbsp;
+This project was created almost two years ago. Since then, there is a newer version of the project which you can find [here](https://github.com/justdjango/django-simple-ecommerce)
 
-![](https://img.shields.io/badge/build-success-success) ![](https://img.shields.io/badge/tests-100%25-success) ![](https://img.shields.io/npm/dw/netlify-plugin-use-env-in-runtime) ![](https://img.shields.io/github/issues/arkhn3b/netlify-plugin-use-env-in-runtime) ![](https://img.shields.io/github/license/arkhn3b/netlify-plugin-use-env-in-runtime) ![](https://img.shields.io/github/stars/arkhn3b/netlify-plugin-use-env-in-runtime?style=social)
+---
 
-&nbsp;
-# Use environment variables in the application runtime
+# Django E-commerce
 
-Make some environment variables available only at build time, in the **runtime of your application**.  
-By default, the variables you enter in your *netlify.toml* file are only accessible at build time.
+This is a very simple e-commerce website built with Django.
 
-[![](https://www.netlify.com/img/deploy/button.svg)](  
-https://app.netlify.com/start/deploy?repository=https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime  
-)
+## Quick demo
 
-&nbsp;
-## Demo
-Try the demo: [https://use-env-in-runtime-plugin-demo.netlify.app/](https://use-env-in-runtime-plugin-demo.netlify.app/)
+[![alt text](https://justdjango.s3-us-west-2.amazonaws.com/media/gifs/djecommerce.gif "Logo")](https://youtu.be/z4USlooVXG0)
 
-&nbsp;
-## What this plugin does
+---
 
-This plugin allows you to transfer environment variables in the runtime of your application from those declared in your *netlify.toml* file and which are only executed at build time.
+## Project Summary
 
-You can even **override variables** defined in the Netlify UI!
+The website displays products. Users can add and remove products to/from their cart while also specifying the quantity of each item. They can then enter their address and choose Stripe to handle the payment processing.
 
-&nbsp;
-## Use case
+[![alt text](https://justdjango.s3-us-west-2.amazonaws.com/media/thumbnails/djecommerce.png "Logo")](https://youtu.be/z4USlooVXG0)
 
-You are a developer who does not have access to your company's Netlify deployment settings console. But your company allows any branch to be deployed on Netlify.
+---
 
-Let's say you have three environment variables that you want to use on a specific branch for a demo, and one of these variables overrides the one set in the Netlify deployment settings console.
+## Running this project
 
-But let's say that for preventive reasons, you are not allowed to push an environment file (*.env*).
+To get this project up and running you should start by having Python installed on your computer. It's advised you create a virtual environment to store your projects dependencies separately. You can install virtualenv with
 
-Let's remind it again, the environment variables defined in the Netlify.toml file are only executed at build time. But they are not made accessible at runtime. Therefore, you are stuck.
+```
+pip install virtualenv
+```
 
-This is where the ***netlify-plugin-use-env-in-runtime*** comes in!
+Clone or download this repository and open it in your editor of choice. In a terminal (mac/linux) or windows terminal, run the following command in the base directory of this project
 
-&nbsp;
-## Usage
-#### UI Installation
-If your project was already deployed to Netlify, use the Netlify UI to [install the Use Env In Runtime Plugin](https://app.netlify.com/plugins/{use-env-in-runtime}/install) in a few clicks.
+```
+virtualenv env
+```
 
-You're able to [remove the plugin](https://docs.netlify.com/configure-builds/build-plugins/#remove-a-plugin) at any time by visiting the [Plugins tab](https://app.netlify.com/plugins) for your site in the Netlify UI.
+That will create a new folder `env` in your project directory. Next activate it with this command on mac/linux:
 
-&nbsp;
-#### File-based Installation
-To install with file-based installation, add the following lines to your `netlify.toml` file:
-```toml  
-[[plugins]] package = "netlify-plugin-use-env-in-runtime"    
- [plugins.inputs]    
-  prefix = ""    
-  def = []  
-```  
-Note: The `[[plugins]]` line is required for each plugin installed via file-based installation, even if you have other plugins in your `netlify.toml` file already.  
-&nbsp;  
-To complete file-based installation, from your project's base directory, use *npm*, *yarn*, or any other *Node.js package manager* to add the plugin to `devDependencies` in `package.json`.
-```  
-npm i -D netlify-plugin-use-env-in-runtime  
-```  
+```
+source env/bin/active
+```
 
-&nbsp;
-#### Configuration
-The plugin requires two inputs to work.  
-| name | type | description | default |  
-|------|------|-------------|---------|  
-| `prefix` | string | The prefix we want to add to our environment variables. For example, `REACT_APP` if we use CRA or `GATSBY` if we use Gatsby.| - |  
-| `def` | string[] \| string | The names of the variables you want to use. Accept two naming schemes:  **1.** use an array of strings: `["VAR_1", "VAR_2"]` **2.** use a string with a comma or semicolon to separate the names: `"VAR_1; VAR_2; VAR_3"` or `"VAR_1, VAR_2, VAR_3"` | - |
+Then install the project dependencies with
 
-&nbsp;
-**Important!** You can **only** configure these inputs in two ways.
-&nbsp;
+```
+pip install -r requirements.txt
+```
 
-1. You're using the plugin through ***Netlify UI***
+Now you can run the project with this command
 
-   If you are using the plugin through the Netlify UI, the only way to configure these two inputs is by [declaring environment variables through the UI](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables).
+```
+python manage.py runserver
+```
 
-   ```env
-   # For prefix input
-   NETLIFY_PLUGIN_USE_ENV_IN_RUNTIME_PREFIX
-   # For def input
-   NETLIFY_PLUGIN_USE_ENV_IN_RUNTIME_DEF
-   ```
+**Note** if you want payments to work you will need to enter your own Stripe API keys into the `.env` file in the settings files.
 
-   ##### Example:
-   ![screenshot-set-env-through-ui img](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/blob/main/assets/img/screenshot-set-env-through-ui.png)
-   
-   &nbsp;
-   > reminder: you can write the value of def input as an array of strings or directly by writing the relative variables with a comma or semicolon as a separator.
+---
 
-   &nbsp;
-2. You're using the plugin through your ***netlify.toml*** file
+## Follow the tutorial
 
-   If you are using the plugin through your netlify.toml file, you have two choices. You can use the environment variables through the UI (as mentioned in the first case) or you can define these inputs through your Toml file.
+This project is part of a [series on YouTube](https://youtu.be/z4USlooVXG0) that teaches how to build an e-commerce website with Django.
 
-   ##### Example:
-   ```toml  
-   [[plugins]] 
-   package = "netlify-plugin-use-env-in-runtime"    
-    [plugins.inputs]    
-     prefix = "REACT_APP"    
-     def = ["VAR_1", "VAR_2"]  
-     
-   # In our React app:  
-   # console.log(process.env); // { ..., REACT_APP_VAR_1 = "something", REACT_APP_VAR_2 = "something else" }  
-   ```  
-   &nbsp;
+---
 
-   > Important!  
-   > 1. The input prefix if defined in the UI is overridden by the one defined in the netlify.toml file if it exists.
-   > 2. The input def if defined in the UI is merged with the one defined in the netlify.toml file if it exists with a notion of winning overload for the one defined in the toml file.
+## Support
 
+If you'd like to support this project and all the other open source work on this organization, you can use the following options
 
-&nbsp;
-#### Execution in Netlify
-Once installed and configured, the plugin will automatically run in the Netlify CI during its specified Netlify Build lifecycle event.
+### Option 1: GitHub Sponsors
 
-&nbsp;
-## Changelog
-###### A detailed changelog, intended for programmers
-- **1.2.2** - Fix some issues ([#1](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/issues/1), [#2](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/issues/2), [#3](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/issues/3), [#4](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/issues/4))
-- **1.2.1** - Remove yarn file
-- **1.2.0** - Add default inputs and add the possibility to configure the plugin through the ui
-- **1.1.0** - Add logs
-- **1.0.0** - First deploy
+Sponsor through GitHub Sponsors. On GitHub, [this repository](https://github.com/justdjango/django-ecommerce) shows a button where you can Sponsor the contributors.
 
-## License
-[GNU General Public License v3.0](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/blob/main/LICENSE)
+### Option 2: JustDjango
 
-## Credits
-[@ARKHN3B](https://github.com/ARKHN3B) (Ben Lmsc)
+If you're learning Django and want to take your next step to become a professional Django developer, consider signing up on [JustDjango](https://learn.justdjango.com).
 
-## Known bugs
-No bugs found for the moment. Please do not hesitate to report the issue here : [issues](https://github.com/ARKHN3B/netlify-plugin-use-env-in-runtime/issues)
+---
 
-## Contributing
-Become the first contributor !
+<div align="center">
+
+<i>Other places you can find us:</i><br>
+
+<a href="https://www.youtube.com/channel/UCRM1gWNTDx0SHIqUJygD-kQ" target="_blank"><img src="https://img.shields.io/badge/YouTube-%23E4405F.svg?&style=flat-square&logo=youtube&logoColor=white" alt="YouTube"></a>
+<a href="https://www.twitter.com/justdjangocode" target="_blank"><img src="https://img.shields.io/badge/Twitter-%231877F2.svg?&style=flat-square&logo=twitter&logoColor=white" alt="Twitter"></a>
+
+</div>
